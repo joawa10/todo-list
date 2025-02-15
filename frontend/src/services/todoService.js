@@ -29,11 +29,3 @@ export const deleteTodo = async (id) => {
     console.error("Error deleting todo:", error);
   }
 };
-
-export const toggleTodoStatus = async (id) => {
-  try {
-    await axios.get(`${BASE_URL}/todo/toggleStatus/${id}`);
-  } catch (error) {
-    console.error("Error toggling todo status:", error);
-  }
-};
