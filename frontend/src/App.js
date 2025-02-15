@@ -1,89 +1,39 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
-
-const BASE_URL = "http://localhost:4001/api";
+import TodoInput from "./components/TodoInput";
+import TodoList from "./components/TodoList";
+import { getTodos, addTodo, deleteTodo, toggleTodoStatus } from "./services/todoService";
 
 function App() {
-  const [todos, setTodos] = useState(null);
-  const [todo, setTodo] = useState("");
+  const [todos, setTodos] = useState([]);
 
   useEffect(() => {
-    getTodos();
+    fetchTodos();
   }, []);
 
-  const getTodos = () => {
-    axios
-      .get(`${BASE_URL}/todos`)
-      .then((res) => setTodos(res.data))
-      .catch((err) => console.error(err));
+  const fetchTodos = async () => {
+    const data = await getTodos();
+    setTodos(data);
   };
 
-  const handleAddTodo = () => {
-    axios
-      .post(`${BASE_URL}/todo/new`, {
-        title: todo,
-      })
-      .then((res) => {
-        setTodos([...todos, res.data]);
-        setTodo("");
-      })
-      .catch((err) => console.error(err));
+  const handleAddTodo = async (title) => {
+    const newTodo = await addTodo(title);
+    if (newTodo) setTodos([...todos, newTodo]);
   };
 
-  const handleDeleteTodo = (id) => {
-    axios
-    .delete(`${BASE_URL}/todo/delete/${id}`)
-    .then((res) =>
-      setTodos(todos.filter((todo) => todo._id !== res.data._id))
-    )
-    .catch((err) =>
-        console.error(err)
-      );
+  const handleDeleteTodo = async (id) => {
+    const deletedTodo = await deleteTodo(id);
+    if (deletedTodo) setTodos(todos.filter((todo) => todo._id !== deletedTodo._id));
   };
 
-  const handleTodoClick = (id) => {
-    axios
-      .get(`${BASE_URL}/todo/toggleStatus/${id}`)
-      .then((res) => getTodos())
-      .catch((err) => console.error(err));
+  const handleToggleTodo = async (id) => {
+    await toggleTodoStatus(id);
+    fetchTodos();
   };
 
   return (
     <div className="App">
-      <div className="todo-input-wrapper">
-        <input
-          className="todo-input-bar"
-          value={todo}
-          onChange={(e) => setTodo(e.target.value)}
-          placeholder="Add a New Todo"
-        />
-        <div className="add-button" onClick={handleAddTodo}>
-          <button>+</button>
-        </div>
-      </div>
-      <div className="todos-list">
-        {!todos || !todos.length ? (
-          <h3 style={{ textAlign: "center" }}>No Todo Data !!!</h3>
-        ) : (
-          todos.map((todo) => (
-            <div className="todo" key={todo._id}>
-              <div
-                onClick={() => handleTodoClick(todo._id)}
-                className={todo.complete ? "complete" : ""}
-                id="todo-title"
-              >
-                {todo.title}
-              </div>
-              <div
-                className="delete"
-                onClick={() => handleDeleteTodo(todo._id)}
-              >
-                <button>X</button>
-              </div>
-            </div>
-          ))
-        )}
-      </div>
+      <TodoInput onAdd={handleAddTodo} />
+      <TodoList todos={todos} onToggle={handleToggleTodo} onDelete={handleDeleteTodo} />
     </div>
   );
 }
