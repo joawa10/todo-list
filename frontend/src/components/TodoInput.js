@@ -11,14 +11,15 @@ const TodoInput = ({ onAdd }) => {
   };
 
   return (
-    <div className="todo-input-wrapper">
+    <div className="todo-input">
       <input
-        className="todo-input-bar"
+        type="text"
+        className="input-field"
         value={todo}
         onChange={(e) => setTodo(e.target.value)}
-        placeholder="Add a New Todo"
+        placeholder="Add a new task..."
       />
-      <button className="add-button" onClick={handleAdd}>+</button>
+      <button onClick={handleAdd} className="add-btn">+</button>
     </div>
   );
 };

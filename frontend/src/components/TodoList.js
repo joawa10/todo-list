@@ -2,9 +2,9 @@ import TodoItem from "./TodoItem";
 
 const TodoList = ({ todos, onToggle, onDelete }) => {
   return (
-    <div className="todos-list">
+    <div className="todo-list">
       {!todos.length ? (
-        <h3 style={{ textAlign: "center" }}>No Todo Data</h3>
+        <p className="empty-message">No tasks added yet.</p>
       ) : (
         todos.map((todo) => (
           <TodoItem key={todo._id} todo={todo} onToggle={onToggle} onDelete={onDelete} />

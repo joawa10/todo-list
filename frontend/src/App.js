@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import TodoInput from "./components/TodoInput";
 import TodoList from "./components/TodoList";
 import { getTodos, addTodo, deleteTodo, toggleTodoStatus } from "./services/todoService";
+import "./styles.css"; // Importing the CSS file
 
 function App() {
   const [todos, setTodos] = useState([]);
@@ -31,9 +32,12 @@ function App() {
   };
 
   return (
-    <div className="App">
-      <TodoInput onAdd={handleAddTodo} />
-      <TodoList todos={todos} onToggle={handleToggleTodo} onDelete={handleDeleteTodo} />
+    <div className="container">
+      <div className="todo-wrapper">
+        <h1 className="title">Todo App</h1>
+        <TodoInput onAdd={handleAddTodo} />
+        <TodoList todos={todos} onToggle={handleToggleTodo} onDelete={handleDeleteTodo} />
+      </div>
     </div>
   );
 }
