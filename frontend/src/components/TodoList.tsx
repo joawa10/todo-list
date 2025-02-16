@@ -1,11 +1,6 @@
 import React from 'react';
 import TodoItem from './TodoItem.tsx';
-
-interface Todo {
-  _id: string;
-  title: string;
-  complete: boolean;
-}
+import { Todo } from '../types/Todo.ts';
 
 interface TodoListProps {
   todos: Todo[];

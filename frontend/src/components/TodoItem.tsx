@@ -1,11 +1,8 @@
 import React from 'react';
+import { Todo } from '../types/Todo';
 
 interface TodoItemProps {
-  todo: {
-    _id: string;
-    title: string;
-    complete: boolean;
-  };
+  todo: Todo;
   onToggle: (id: string) => void;
   onDelete: (id: string) => void;
 }
