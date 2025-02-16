@@ -1,7 +1,12 @@
+import React from "react";
 import { useState } from "react";
 
-const TodoInput = ({ onAdd }) => {
-  const [todo, setTodo] = useState("");
+interface TodoInputProps {
+  onAdd: (title: string) => void;
+}
+
+const TodoInput: React.FC<TodoInputProps> = ({ onAdd }) => {
+  const [todo, setTodo] = useState<string>("");
 
   const handleAdd = () => {
     if (todo.trim()) {
