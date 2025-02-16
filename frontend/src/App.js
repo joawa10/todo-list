@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
 import TodoInput from "./components/TodoInput";
 import TodoList from "./components/TodoList";
-import { getTodos, addTodo, deleteTodo } from "./services/todoService";
+import { getTodos, addTodo, deleteTodo, toggleTodoStatus } from "./services/todoService";
 import "./styles.css"; 
 
 function App() {
-  const [todos, setTodos] = useState([]);
+  const [todos, setTodos] = useState([]); 
 
   useEffect(() => {
     fetchTodos();
@@ -26,12 +26,18 @@ function App() {
     if (deletedTodo) setTodos(todos.filter((todo) => todo._id !== deletedTodo._id));
   };
 
+  // const handleToggleTodo = async (id) => {
+  //   await toggleTodoStatus(id);
+  //   fetchTodos();
+  // };
+
   return (
     <div className="container">
       <div className="todo-wrapper">
         <h1 className="title">Todo App</h1>
         <TodoInput onAdd={handleAddTodo} />
         <TodoList todos={todos} onDelete={handleDeleteTodo} />
+        {/* onToggle={handleToggleTodo} */}
       </div>
     </div>
   );

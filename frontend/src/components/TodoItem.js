@@ -3,7 +3,7 @@ const TodoItem = ({ todo, onToggle, onDelete }) => {
     <div className="todo-item">
       <span
         onClick={() => onToggle(todo._id)}
-        className={todo.complete ? "todo-text completed" : "todo-text"}
+        // className={todo.complete ? "completed" : "todo-text"}
       >
         {todo.title}
       </span>
