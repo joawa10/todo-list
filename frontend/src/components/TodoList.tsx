@@ -4,8 +4,8 @@ import { Todo } from '../types/Todo.ts';
 
 interface TodoListProps {
   todos: Todo[];
-  onToggle: (id: string) => void;
-  onDelete: (id: string) => void;
+  onToggle: (id: number) => void;
+  onDelete: (id: number) => void;
 }
 
 const TodoList: React.FC<TodoListProps> = ({ todos, onToggle, onDelete }) => {
@@ -15,7 +15,7 @@ const TodoList: React.FC<TodoListProps> = ({ todos, onToggle, onDelete }) => {
         <p className="empty-message">No tasks added yet.</p>
       ) : (
         todos.map((todo) => (
-          <TodoItem key={todo._id} todo={todo} onToggle={onToggle} onDelete={onDelete} />
+          <TodoItem key={todo.id} todo={todo} onToggle={onToggle} onDelete={onDelete} />
         ))
       )}
     </div>

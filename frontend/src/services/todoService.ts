@@ -22,7 +22,7 @@ export const addTodo = async (title: string): Promise<Todo | undefined> => {
   }
 };
 
-export const deleteTodo = async (id: string): Promise<Todo | undefined> => {
+export const deleteTodo = async (id: number): Promise<Todo | undefined> => {
   try {
     const res = await axios.delete<Todo>(`${BASE_URL}/todo/delete/${id}`);
     return res.data;
@@ -31,10 +31,21 @@ export const deleteTodo = async (id: string): Promise<Todo | undefined> => {
   }
 };
 
-export const toggleTodoStatus = async (id: string): Promise<void> => {
+export const toggleTodoStatus = async (id: number): Promise<void> => {
   try {
     await axios.get(`${BASE_URL}/todo/toggleStatus/${id}`);
   } catch (error) {
     console.error("Error toggling todo status:", error);
   }
 };
+
+// frontend log
+// todoService.ts:27 
+//  DELETE http://localhost:4001/api/todo/delete/undefined 400 (Bad Request)
+//  deleteTodo	@	todoService.ts:27
+//  handleDeleteTodo	@	App.tsx:27
+//  onClick	@	TodoItem.tsx:19
+ 
+// backend server log
+// Deleting todo with id: NaN
+// Todo id is undefined

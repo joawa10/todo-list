@@ -22,12 +22,13 @@ const App: React.FC = () => {
     if (newTodo) setTodos([...todos, newTodo]);
   };
 
-  const handleDeleteTodo = async (id: string) => {
+  const handleDeleteTodo = async (id: number) => {
+    console.log("Deleting todo with id:", id); // Debug log
     const deletedTodo = await deleteTodo(id);
-    if (deletedTodo) setTodos(todos.filter((todo) => todo._id !== deletedTodo._id));
+    if (deletedTodo) setTodos(todos.filter((todo) => todo.id !== deletedTodo.id));
   };
 
-  const handleToggleTodo = async (id: string) => {
+  const handleToggleTodo = async (id: number) => {
     await toggleTodoStatus(id);
     fetchTodos();
   };
