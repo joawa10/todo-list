@@ -39,13 +39,11 @@ export const toggleTodoStatus = async (id: number): Promise<void> => {
   }
 };
 
-// frontend log
-// todoService.ts:27 
-//  DELETE http://localhost:4001/api/todo/delete/undefined 400 (Bad Request)
-//  deleteTodo	@	todoService.ts:27
-//  handleDeleteTodo	@	App.tsx:27
-//  onClick	@	TodoItem.tsx:19
- 
-// backend server log
-// Deleting todo with id: NaN
-// Todo id is undefined
+export const editTodo = async (id: number, title: string): Promise<Todo | undefined> => {
+  try {
+    const res = await axios.put<Todo>(`${BASE_URL}/todo/edit/${id}`, { title });
+    return res.data;
+  } catch (error) {
+    console.error("Error editing todo:", error);
+  }
+};

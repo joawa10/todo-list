@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import TodoInput from "./components/TodoInput.tsx";
 import TodoList from "./components/TodoList.tsx";
-import { getTodos, addTodo, deleteTodo, toggleTodoStatus } from "./services/todoService.ts";
+import { getTodos, addTodo, deleteTodo, toggleTodoStatus, editTodo } from "./services/todoService.ts";
 import { Todo } from "./types/Todo";
 import "./styles.css"; 
 
@@ -23,7 +23,6 @@ const App: React.FC = () => {
   };
 
   const handleDeleteTodo = async (id: number) => {
-    console.log("Deleting todo with id:", id); // Debug log
     const deletedTodo = await deleteTodo(id);
     if (deletedTodo) setTodos(todos.filter((todo) => todo.id !== deletedTodo.id));
   };
@@ -33,12 +32,19 @@ const App: React.FC = () => {
     fetchTodos();
   };
 
+  const handleEditTodo = async (id: number, title: string) => {
+    const updatedTodo = await editTodo(id, title);
+    if (updatedTodo) {
+      setTodos(todos.map((todo) => (todo.id === id ? updatedTodo : todo)));
+    }
+  };
+
   return (
     <div className="container">
       <div className="todo-wrapper">
         <h1 className="title">Todo App</h1>
         <TodoInput onAdd={handleAddTodo} />
-        <TodoList todos={todos} onDelete={handleDeleteTodo} onToggle={handleToggleTodo} />
+        <TodoList todos={todos} onDelete={handleDeleteTodo} onToggle={handleToggleTodo} onEdit={handleEditTodo} />
       </div>
     </div>
   );
