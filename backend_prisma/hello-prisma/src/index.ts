@@ -1,4 +1,4 @@
-import express, { Application } from 'express';
+import express, { type Application } from 'express';
 import cors from 'cors';
 import todoRoute from '../prisma/routes/todoRoute';
 import dotenv from 'dotenv';

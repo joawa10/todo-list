@@ -1,5 +1,5 @@
 import { PrismaClient } from '@prisma/client';
-import { Request, Response } from 'express';
+import type { Request, Response } from 'express';
 
 const prisma = new PrismaClient();
 
@@ -46,7 +46,7 @@ export const deleteTodo = async (req: Request<TodoParams>, res: Response): Promi
       return;
     }
     const parsedId = Number(id); //parse id
-    if (isNaN(parsedId)) {
+    if (Number.isNaN(parsedId)) {
       console.error("Todo id is not a valid number");
       res.status(400).json({ error: "Todo id must be a valid number" });
       return;
@@ -99,7 +99,7 @@ export const editTodo = async (req: Request<TodoParams>, res: Response): Promise
       return;
     }
     const parsedId = Number(id); // parse id
-    if (isNaN(parsedId)) {
+    if (Number.isNaN(parsedId)) {
       console.error("Todo id is not a valid number");
       res.status(400).json({ error: "Todo id must be a valid number" });
       return;
